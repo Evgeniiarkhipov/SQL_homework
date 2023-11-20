@@ -1,0 +1,38 @@
+/*--------------------------------Задание №1------------------------------------*/
+create table groups (
+  id int PRIMARY KEY AUTO_INCREMENT,
+  name varchar(50),
+  rating int,
+  course int);
+insert into groups (name, rating, course) values 
+  ('QA_326', 100, 1),
+  ('QA_327', 90, 1), 
+  ('QA_328', 80, 2);
+select * from groups;  
+/*------------------------------------------------------------------------------*/
+/*--------------------------------Задание №2------------------------------------*/
+create table weapons (
+  id int PRIMARY KEY AUTO_INCREMENT,
+  name varchar(50),
+  type varchar(50),
+  power int
+);
+insert into weapons (name, type, power) values 
+  ('Glock 17', 'gun', 3),
+  ('AK47', 'machine', 8), 
+  ('АН-94', 'machine', 7);
+select * from weapons;
+/*------------------------------------------------------------------------------*/
+/*--------------------------------Задание №3------------------------------------*/
+create table games (
+  id int PRIMARY KEY AUTO_INCREMENT,
+  game_name varchar(50),
+  game_date date,
+  save_time time
+);
+insert into games (game_name, game_date, save_time) values 
+  ('saper', '1999-01-09', '11:50'),
+  ('solitaire', '1995-11-24', '12:30'), 
+  ('madjong', '2005-12-12', '08:25');
+select * from games;
+/*------------------------------------------------------------------------------*/
