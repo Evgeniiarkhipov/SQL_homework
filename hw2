@@ -1,0 +1,56 @@
+/*-----------------------Задание 1--------------------------------------*/
+/*
+1.
+Есть бд “школа”
+необходимо спроектировать таблицы “Предмет” и “Преподаватели”
+*/  
+
+create database if not exists school;
+use school;
+
+create table if not exists lessons(
+id_lesson int primary key AUTO_INCREMENT,
+lesson varchar(20),
+lesson_date date
+);
+
+create table if not exists teachers(
+id_teacher int,
+teacher varchar(20),
+teacher_lesson varchar(50),
+working_day date,
+FOREIGN KEY (id_teacher) REFERENCES lessons(id_lesson)
+);
+
+
+insert into lessons (lesson, lesson_date) values
+	('math', '2023-11-28'),
+    ('math', '2023-11-29'),
+    ('math', '2023-11-30'),
+    ('literature', '2023-11-28'),
+    ('literature', '2023-11-29'),
+    ('literature', '2023-11-30'),
+    ('physical_training', '2023-11-28'),
+    ('physical_training', '2023-11-29'),
+    ('physical_training', '2023-11-30');
+
+insert into teachers (id_teacher, teacher, teacher_lesson, working_day) values
+	  (1, 'Ivan Ivanovich', 'math', '2023-11-28'),
+    (2, 'Semen Semenovich', 'math', '2023-11-29'),
+    (3, 'Semen Semenovich', 'math', '2023-11-30'),
+    (4, 'Irina Petrovna', 'literature', '2023-11-28'),
+	  (4, 'Irina Petrovna', 'literature', '2023-11-30'),
+    (5, 'Petr Petrovich', 'physical_training', '2023-11-30');
+   
+
+-- Показать преподавателей, обучающих математике
+select * from teachers
+where teacher_lesson = 'math';
+
+-- Показать предметы за 28.11.2023
+select * from lessons
+where lesson_date = '2023-11-28';
+
+-- Показать предметы, которые ведет Semen Semenovich
+select * from teachers
+where teacher = 'Semen Semenovich';
