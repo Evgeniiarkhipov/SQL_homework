@@ -1,0 +1,45 @@
+/*--------------------------------Задание №1------------------------------------------------*/
+create database if not exists bank;
+use bank;
+
+create table if not exists bank_clients(
+id_client int primary key AUTO_INCREMENT,
+client_name varchar(30),
+client_birthdate date,
+is_accaunt bool
+);
+
+create table if not exists bank_accaunts(
+id int,
+accaunt bigint,
+balance int,
+open_date date,
+FOREIGN KEY (id) REFERENCES bank_clients(id_client)
+);
+
+insert into bank_clients (client_name, client_birthdate, is_accaunt) values
+('Ivanov Ivan', '2000-11-20', true),
+('Ivanov Bogdan', '1985-12-25', true),
+('Bogdanov Ivan', '1999-05-10', true),
+('Semenov Semen', '1978-07-18', false),
+('Nikitina Irina', '1966-10-30', true),
+('Sidorova Ekaterina', '1973-02-10', false);
+
+insert into bank_accaunts (accaunt, balance, open_date, id) values
+(4081781011965401, 100, '2023-10-25', 1),
+(4081781011965402, 200, '2017-10-22', 2),
+(4081781011965403, 300, '2020-11-15', 3),
+(4081781011965404, 400, '2017-10-05', 3),
+(4081781011965405, 0, '2021-10-25', 5);
+
+select accaunt, client_name from bank_clients, bank_accaunts
+where id_client = id;
+
+select accaunt, client_name from bank_clients, bank_accaunts
+where id_client = id and balance > 0;
+
+select accaunt, client_name from bank_clients, bank_accaunts
+where id_client = id and year(open_date) = 2017;
+
+select client_name from bank_clients
+where is_accaunt is false;
