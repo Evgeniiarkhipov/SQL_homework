@@ -95,3 +95,84 @@ not in
 	(select customers.customer_id from customers, orders
 	where orders.customer_id = customers.customer_id);
 /*--------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------Задание №2-------------------------------------------------*/
+/*---------------Спроектировать  бд “семья” по схеме и создать запросы------------------------------------------*/
+
+create database if not exists family;
+use family;
+
+CREATE TABLE if not exists familymembers(
+  member_id INT NOT NULL PRIMARY KEY,
+  status VARCHAR(45) NOT NULL,
+  member_name VARCHAR(45) NOT NULL,
+  birthday datetime
+); 
+
+CREATE TABLE if not exists goodtypes(
+  good_type_id INT NOT NULL PRIMARY KEY,
+  good_type_name VARCHAR(45) NOT NULL
+); 
+
+CREATE TABLE if not exists goods(
+  good_id INT NOT NULL PRIMARY KEY,
+  good_name VARCHAR(45) NOT NULL,
+  type int not null,
+  foreign key (type) references goodtypes(good_type_id)
+); 
+
+CREATE TABLE if not exists payments(
+  payment_id INT NOT NULL PRIMARY KEY,
+  family_member int NOT NULL,
+  good int NOT NULL,
+  amount int not null,
+  unit_price int not null,
+  date datetime,
+  foreign key (family_member) references familymembers(member_id),
+  foreign key (good) references goods(good_id)
+); 
+
+insert into familymembers values
+(1, 'mother', 'Anna Ivanova', '1985-01-01'),
+(2, 'father', 'Ivan Ivanov', '1983-05-05'),
+(3, 'son', 'Pavel Ivanov', '2000-11-11'),
+(4, 'daughter', 'Polina Ivanova', '2002-07-07');
+
+insert into goodtypes values
+(1, 'vegetable'),
+(2, 'fruit'),
+(3, 'milk'),
+(4, 'bakery');
+
+insert into goods values
+(1, 'potato', 1),
+(2, 'tomato', 1),
+(3, 'cucumber', 1),
+(4, 'apple', 2),
+(5, 'pear', 2),
+(6, 'butter', 3),
+(7, 'bread', 4);
+
+insert into payments values
+(1, 1, 1, 3, 200, '2023-11-10'),
+(2, 1, 2, 4, 300, '2023-11-10'),
+(3, 1, 4, 3, 400, '2023-11-10'),
+(4, 1, 5, 3, 200, '2023-11-10'),
+(5, 2, 6, 1, 100, '2023-11-08'),
+(6, 2, 3, 2, 50, '2023-11-08'),
+(7, 3, 3, 5, 250, '2023-11-01');
+
+-- 1.1. Найти имена всех матерей (mother)
+select member_name from familymembers
+where status = 'mother';
+
+-- 1.2. Определить, кто из членов семьи покупал картошку (potato)
+select * from familymembers, goods, payments
+where payments.family_member = familymembers.member_id
+and payments.good = goods.good_id
+and good_name = 'potato';
+
+-- 1.3. Определить какие товары не были куплены
+select good_name from goods
+where good_id not in
+	(select good from payments where payments.good = goods.good_id);
+/*--------------------------------------------------------------------------------------------------------------*/
