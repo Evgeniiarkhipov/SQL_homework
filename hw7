@@ -133,3 +133,41 @@ and Restaurant.RestaurantID = 2;
 select ReservationID, Customers.Name, TableID, ReservationTime from Reservations, Restaurant, Customers
 where Reservations.CustomerID = Customers.CustomerID
 and Restaurant.RestaurantID = 3;
+
+-- 4. Запрос на получение списка официантов для ресторана:
+-- Получить идентификатор и имя официантов, работающих в ресторане с идентификатором 4.
+select WaiterID, Waiters.Name from Waiters
+join Restaurant
+on Waiters.RestaurantID = Restaurant.RestaurantID;
+
+-- 5. Запрос на обновление данных о столике:
+-- Изменить статус доступности столика с номером 5 на "недоступен".
+update Tables set IsAvailable = False
+where TableID = 5;
+
+-- 6. Запрос на удаление клиента из базы данных:
+-- Удалить информацию о клиенте с идентификатором 6 из базы данных.
+delete Customers, Reservations from Reservations
+join Customers
+on Reservations.CustomerID = Customers.CustomerID
+where Customers.CustomerID = 6;
+
+-- 7. Запрос на получение информации о бронировании по идентификатору:
+-- Получить все данные о бронировании с идентификатором 7.
+select * from Reservations
+where ReservationID = 7;
+
+-- 8. Запрос на подсчет количества столов в ресторане:
+-- Получить общее количество столов в ресторане с идентификатором 8.
+select count(TableID) from Tables
+where RestaurantID = 8;
+
+-- 9. Запрос на выборку столов по вместимости:
+-- Получить номера и вместимость столов, вместимость которых больше или равна 6.
+select TableID, Capacity from Tables
+where Capacity >= 6;
+
+-- 10. Запрос на поиск информации о клиенте по имени:
+-- Найти всех клиентов, имя которых содержит "John".
+select Name from Customers
+where Name like 'John %';
